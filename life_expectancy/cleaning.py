@@ -166,6 +166,7 @@ def main(args=None):
     df = load_data(parsed_args.input_path)
     cleaned_df = clean_data(df, country=parsed_args.country)
     save_data(cleaned_df, parsed_args.output_path)
+    return cleaned_df
 
 
 if __name__ == "__main__":  # pragma: no cover
