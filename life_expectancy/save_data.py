@@ -19,4 +19,3 @@ def save_data(df: pd.DataFrame, filename) -> None:
         df.to_parquet(filename, index=False)
     else:
         raise ValueError(f"Unsupported file format for: {filename}")
-    

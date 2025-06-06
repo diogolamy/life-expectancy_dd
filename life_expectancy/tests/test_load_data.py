@@ -10,4 +10,3 @@ def test_load_data_from_fixture_file(eu_life_expectancy_input):
     result = load_data(path)
 
     pd.testing.assert_frame_equal(result, eu_life_expectancy_input)
-    

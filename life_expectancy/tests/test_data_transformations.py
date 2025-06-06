@@ -38,4 +38,3 @@ def test_filter_rows():
     result = filter_rows(df, "country", "PT")
     assert result.shape[0] == 1
     assert result.iloc[0]["val"] == 10
-    
