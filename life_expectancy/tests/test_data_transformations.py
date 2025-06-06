@@ -1,7 +1,6 @@
 """Tests for the data transformations module"""
 import pandas as pd
 
-import pytest
 from life_expectancy.data_transformations import (
     split_columns, unpivot, clean_numeric_column,
     convert_column_dtype, filter_rows
