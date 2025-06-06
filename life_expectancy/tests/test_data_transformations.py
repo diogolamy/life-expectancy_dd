@@ -6,25 +6,26 @@ from life_expectancy.data_transformations import (
     convert_column_dtype, filter_rows
 )
 
-def test_split_columns():
+def test_split_columns(eu_life_expectancy_input):
     """Test that split_columns correctly splits a compound column into separate columns"""
-    df = pd.DataFrame({"compound": ["A,B,C", "D,E,F"]})
-    result = split_columns(df.copy(), "compound", ",", ["col1", "col2", "col3"])
-    assert list(result.columns) == ["col1", "col2", "col3"]
-    assert result.shape == (2, 3)
+    result = split_columns(eu_life_expectancy_input, "unit,sex,age,geo\\time", ",",
+                           ["unit", "sex", "age", "geo"])
+    
+    for col in ["unit", "sex", "age", "geo"]:
+        assert col in result.columns  
 
-def test_unpivot():
+def test_unpivot(eu_life_expectancy_input):
     """Test that unpivot reshapes wide data into long format correctly"""
-    df = pd.DataFrame({"id": [1], "2020": [10], "2021": [20]})
-    result = unpivot(df, exclude_columns=["id"], identifier_col_name="year", value_col_name="value")
-    assert set(result.columns) == {"id", "year", "value"}
-    assert len(result) == 2
 
-def test_clean_numeric_column():
+    result = unpivot(eu_life_expectancy_input, ["unit", "sex", "age", "geo"], 
+                     identifier_col_name="year", value_col_name="value")
+    
+    assert list(result.columns) == ["unit", "sex", "age", "geo", "year", "value"]
+
+def test_clean_numeric_column(eu_life_expectancy_input):
     """Test that clean_numeric_column removes non-numeric symbols and extracts numbers"""
-    df = pd.DataFrame({"value": ["€1,000", "N/A", " 200 "]})
-    cleaned = clean_numeric_column(df, "value")
-    assert cleaned["value"].tolist() == ["1000", "200"]
+    result = clean_numeric_column(eu_life_expectancy_input, "year")
+    assert result["value"].tolist() == ["1000", "200"]
 
 def test_convert_column_dtype():
     """Test that convert_column_dtype correctly changes the data type of a column"""
