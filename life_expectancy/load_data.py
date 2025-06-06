@@ -1,4 +1,6 @@
-import pandas as pd 
+"""Load data life_espectancy"""
+
+import pandas as pd
 
 def load_data(path: str, delimiter: str = '\t') -> pd.DataFrame:
     """
