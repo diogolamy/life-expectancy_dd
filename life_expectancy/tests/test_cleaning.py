@@ -2,24 +2,22 @@
 import pandas as pd
 
 from life_expectancy.cleaning import main
-from . import OUTPUT_DIR
+from . import FIXTURES_DIR
 
 
-def test_main(pt_life_expectancy_expected):
+def test_main(eu_life_expectancy_expected):
     """Run the 'main' function and compare the output to the expected output"""
 
+    output_path = FIXTURES_DIR / "test_main_output.csv"
+
     args = [
-        "life_expectancy/data/eu_life_expectancy_raw.tsv",
-        str(OUTPUT_DIR / "pt_life_expectancy.csv"),
+        str(FIXTURES_DIR / "eu_life_expectancy_raw.tsv"),
+        str(output_path),
         "--country", "PT"
     ]
 
     main(args)
 
-    pt_life_expectancy_actual = pd.read_csv(
-        OUTPUT_DIR / "pt_life_expectancy.csv"
-    )
+    actual_df = pd.read_csv(output_path)
 
-    pd.testing.assert_frame_equal(
-        pt_life_expectancy_actual, pt_life_expectancy_expected
-    )
+    pd.testing.assert_frame_equal(actual_df, eu_life_expectancy_expected)
