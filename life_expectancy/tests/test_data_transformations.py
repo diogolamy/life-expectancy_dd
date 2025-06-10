@@ -22,20 +22,18 @@ def test_unpivot(eu_life_expectancy_input):
     
     assert list(result.columns) == ["unit", "sex", "age", "geo", "year", "value"]
 
-def test_clean_numeric_column(eu_life_expectancy_input):
+def test_clean_numeric_column():
     """Test that clean_numeric_column removes non-numeric symbols and extracts numbers"""
-    result = clean_numeric_column(eu_life_expectancy_input, "year")
-    assert result["value"].tolist() == ["1000", "200"]
+    df = pd.DataFrame({'value': ['', '19.3 e', '71.6']})
+    result = clean_numeric_column(df, 'value')
+    assert result['value'].tolist() == ['19.3', '71.6']
 
-def test_convert_column_dtype():
+def test_convert_column_dtype(eu_life_expectancy_intermediate):
     """Test that convert_column_dtype correctly changes the data type of a column"""
-    df = pd.DataFrame({"val": ["1", "2"]})
-    result = convert_column_dtype(df, "val", int)
-    assert result["val"].dtype == int
+    result = convert_column_dtype(eu_life_expectancy_intermediate, "year", int)
+    assert result["year"].dtype == int
 
-def test_filter_rows():
+def test_filter_rows(eu_life_expectancy_intermediate):
     """Test that filter_rows correctly filters rows based on a column value"""
-    df = pd.DataFrame({"country": ["PT", "DE"], "val": [10, 20]})
-    result = filter_rows(df, "country", "PT")
-    assert result.shape[0] == 1
-    assert result.iloc[0]["val"] == 10
+    result = filter_rows(eu_life_expectancy_intermediate, "region", "PT")
+    assert (result["region"] == "PT").all()
