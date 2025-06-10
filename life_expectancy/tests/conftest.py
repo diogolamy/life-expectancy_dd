@@ -15,6 +15,11 @@ def eu_life_expectancy_input() -> pd.DataFrame:
     return pd.read_csv(FIXTURES_DIR / "eu_life_expectancy_raw.tsv", sep="\t")
 
 @pytest.fixture(scope="session")
+def eu_life_expectancy_intermediate() -> pd.DataFrame:
+    """Fixture to load the input sample for testing intemediate cleaning."""
+    return pd.read_csv(FIXTURES_DIR / "eu_life_expectancy_intermediate_raw.tsv", sep="\t")
+
+@pytest.fixture(scope="session")
 def eu_life_expectancy_expected() -> pd.DataFrame:
     """Fixture to load the expected cleaned output of the sample."""
     return pd.read_csv(FIXTURES_DIR / "eu_life_expectancy_expected.csv")
