@@ -5,7 +5,7 @@ from life_expectancy.load_data import load_data
 from life_expectancy.data_transformations import split_columns, unpivot, clean_data
 
 # Create Input Fixture with Guaranteed Region
-raw_df = load_data("life_expectancy/data/eu_life_expectancy_raw.tsv", "\t")
+raw_df = pd.read_csv("life_expectancy/data/eu_life_expectancy_raw.tsv", sep="\t")
 first_col = raw_df.columns[0]
 
 REGION = "PT"
@@ -14,7 +14,7 @@ other_rows = raw_df[~raw_df[first_col].str.endswith(f",{REGION}")].sample(n=10, 
 
 fixture_input = pd.concat([region_rows.head(2), other_rows], ignore_index=True)
 fixture_input = fixture_input.sample(frac=1, random_state=42).reset_index(drop=True)
-fixture_input.to_csv("life_expectancy/tests/fixtures/eu_life_expectancy_raw.tsv",
+fixture_input.to_csv("life_expectancy/tests/fixtures/eu_life_expectancy_raw.tsv", 
                      sep="\t", index=False)
 
 print("Original shape:", raw_df.shape)
