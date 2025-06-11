@@ -13,9 +13,7 @@ region_rows = raw_df[raw_df[first_col].str.endswith(f",{REGION}")]
 other_rows = raw_df[~raw_df[first_col].str.endswith(f",{REGION}")].sample(n=10, random_state=42)
 
 fixture_input = pd.concat([region_rows.head(2), other_rows], ignore_index=True)
-fixture_input = fixture_input.sample(frac=1, random_state=42).reset_index(drop=True)
-fixture_input.to_csv("life_expectancy/tests/fixtures/eu_life_expectancy_raw.tsv", 
-                     sep="\t", index=False)
+fixture_input.to_csv("life_expectancy/tests/fixtures/eu_life_expectancy_raw.tsv", sep="\t", index=False)
 
 print("Original shape:", raw_df.shape)
 print("Fixture shape:", fixture_input.shape)
