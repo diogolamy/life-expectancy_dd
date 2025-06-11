@@ -9,4 +9,10 @@ def test_load_data_from_fixture_file(eu_life_expectancy_input):
 
     result = load_data(path)
 
+# Debug output
+    print("Result columns:", result.columns.tolist())
+    print("Fixture columns:", eu_life_expectancy_input.columns.tolist())
+    print("Result shape:", result.shape)
+    print("Fixture shape:", eu_life_expectancy_input.shape)
+
     pd.testing.assert_frame_equal(result, eu_life_expectancy_input)
