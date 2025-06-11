@@ -1,10 +1,11 @@
 '''Create Sample Data for Test Fixtures'''
 
 import pandas as pd
+from life_expectancy.load_data import load_data
 from life_expectancy.data_transformations import split_columns, unpivot, clean_data
 
 # Create Input Fixture with Guaranteed Region
-raw_df = pd.read_csv("life_expectancy/data/eu_life_expectancy_raw.tsv", sep="\t")
+raw_df = load_data("life_expectancy/data/eu_life_expectancy_raw.tsv", "\t")
 first_col = raw_df.columns[0]
 
 REGION = "PT"
@@ -15,6 +16,9 @@ fixture_input = pd.concat([region_rows.head(2), other_rows], ignore_index=True)
 fixture_input = fixture_input.sample(frac=1, random_state=42).reset_index(drop=True)
 fixture_input.to_csv("life_expectancy/tests/fixtures/eu_life_expectancy_raw.tsv",
                      sep="\t", index=False)
+
+print("Original shape:", raw_df.shape)
+print("Fixture shape:", fixture_input.shape)
 
 # Create Intermediate Fixture
 
