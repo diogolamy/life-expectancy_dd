@@ -18,8 +18,7 @@ def load_data(path: str, *, delimiter: str = '\t') -> pd.DataFrame:
     }
 
     path = path.lower()
-    for file_extension, loader_function in loaders.items():
-        if path.endswith(file_extension):
-            return loader_function(path)
+    file_extension = get_file_extension(path)
+    loaders[file_extension](path)
 
     raise ValueError(f"Unsupported file format: {path}")
