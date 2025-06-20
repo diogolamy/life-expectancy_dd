@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-def load_data(path: str, delimiter: str = '\t') -> pd.DataFrame:
+def load_data(path: str, *, delimiter: str = '\t') -> pd.DataFrame:
     """
     Loads a dataset based on file extension.
     """
