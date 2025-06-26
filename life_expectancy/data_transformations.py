@@ -1,6 +1,7 @@
 """Data transformation life_espectancy"""
 
 import pandas as pd
+from life_expectancy.region_enum import Region
 
 def split_columns(df: pd.DataFrame,
                   column: str,
@@ -78,7 +79,7 @@ def filter_rows(df: pd.DataFrame, column: str, value) -> pd.DataFrame:
 
     return df[df[column] == value]
 
-def clean_data(df: pd.DataFrame, country: str = "PT") -> pd.DataFrame:
+def clean_data(df: pd.DataFrame, country: Region = Region.PT) -> pd.DataFrame:
     """
     Clean dataframe based on life expectancy data format by splitting columns, 
     reshaping, converting types, and filtering by country.
@@ -98,6 +99,7 @@ def clean_data(df: pd.DataFrame, country: str = "PT") -> pd.DataFrame:
     df = clean_numeric_column(df, 'value')
     df = convert_column_dtype(df, 'value', float)
 
-    df = filter_rows(df, 'region', country)
+    if country:
+        df = filter_rows(df, 'region', country.value)
 
     return df
