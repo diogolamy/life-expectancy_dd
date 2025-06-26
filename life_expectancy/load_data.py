@@ -1,8 +1,9 @@
 """Load data life_espectancy"""
 
+import os
 import pandas as pd
 
-def load_data(path: str, *, delimiter: str = '\t') -> pd.DataFrame:
+def load_data(path: str, *, delimiter: str = None) -> pd.DataFrame:
     """
     Loads a dataset based on file extension.
     """
@@ -17,8 +18,12 @@ def load_data(path: str, *, delimiter: str = '\t') -> pd.DataFrame:
         '.parquet': pd.read_parquet,
     }
 
-    path = path.lower()
-    file_extension = get_file_extension(path)
-    loaders[file_extension](path)
+    ext = os.path.splitext(path.lower())[1]
 
-    raise ValueError(f"Unsupported file format: {path}")
+    if ext not in loaders:
+        raise ValueError(f"Unsupported file format: {path}")
+
+    if delimiter is not None and ext != '.txt':
+        raise ValueError(f"`delimiter` argument is only supported for .txt files, not for {ext}")
+
+    return loaders[ext](path)
