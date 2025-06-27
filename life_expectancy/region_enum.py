@@ -3,6 +3,9 @@
 from enum import Enum
 
 class Region(Enum):
+    """
+    Enum representing regions and countries used in the life expectancy dataset.
+    """
     AL = 'AL'
     AM = 'AM'
     AT = 'AT'
@@ -62,6 +65,10 @@ class Region(Enum):
 
     @classmethod
     def countries(cls) -> list[str]:
+        """
+        Return a list of country codes, excluding grouped regions.
+        """
+
         excluded = {"DE_TOT", "EA18", "EA19", "EEA30_2007", "EEA31",
                     "EFTA", "EU27_2007", "EU27_2020", "EU28"}
         return list(map(lambda r: r.value, filter(lambda r: r.name not in excluded, cls)))
