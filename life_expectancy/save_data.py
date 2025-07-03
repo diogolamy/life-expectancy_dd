@@ -1,4 +1,4 @@
-"""Save data life_espectancy"""
+"""Save data life_expectancy"""
 
 import pandas as pd
 

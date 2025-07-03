@@ -1,4 +1,4 @@
-"""Load data life_espectancy"""
+"""Load data life_expectancy"""
 
 import os
 import pandas as pd

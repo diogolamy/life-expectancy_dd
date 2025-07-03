@@ -1,4 +1,4 @@
-"""Data transformation life_espectancy"""
+"""Data transformation life_expectancy"""
 
 import pandas as pd
 from life_expectancy.region_enum import Region
