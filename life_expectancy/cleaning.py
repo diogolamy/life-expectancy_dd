@@ -4,6 +4,7 @@ import argparse
 from life_expectancy.load_data import load_data
 from life_expectancy.data_transformations import clean_data
 from life_expectancy.save_data import save_data
+from life_expectancy.region_enum import Region
 
 
 def main(args=None):
@@ -19,8 +20,10 @@ def main(args=None):
 
     parsed_args = parser.parse_args(args)
 
+    country_enum = Region(parsed_args.country)
+
     df = load_data(parsed_args.input_path)
-    cleaned_df = clean_data(df, country=parsed_args.country)
+    cleaned_df = clean_data(df, country=country_enum)
     save_data(cleaned_df, parsed_args.output_path)
     return cleaned_df
 
