@@ -125,5 +125,5 @@ ext = os.path.splitext(path)[1]
     if delimiter is not None and ext != '.txt':
         raise ValueError(f"`delimiter` is only supported for .txt files, not for {ext}")
 
-    loader = get_loader_for_extension(ext, delimiter)
+    loader = get_loader(ext, delimiter)
     return loader.load_data(path)
