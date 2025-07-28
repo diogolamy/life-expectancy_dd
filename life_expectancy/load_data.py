@@ -1,6 +1,8 @@
 """Load data life_expectancy"""
 
 # pylint: disable=too-few-public-methods
+# pylint: disable=too-many-return-statements
+
 
 import os
 import zipfile
@@ -90,11 +92,12 @@ class ZipLoader(DataLoader):
             }
 
 
+# pylint: disable=R1705
 def get_loader(ext: str, delimiter: str = None) -> DataLoader:
     """
     Returns the appropriate DataLoader based on the file extension.
     """
-    
+
     ext = ext.lower()
     if ext == '.csv':
         return CSVLoader()
@@ -119,7 +122,7 @@ def load_data(path: str, *, delimiter: str = None) -> pd.DataFrame:
     """
     Loads a dataset based on file extension using the strategy pattern.
     """
-    
+
     ext = os.path.splitext(path)[1]
 
     if delimiter is not None and ext != '.txt':
