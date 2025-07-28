@@ -90,30 +90,40 @@ class ZipLoader(DataLoader):
             }
 
 
+def get_loader(ext: str, delimiter: str = None) -> DataLoader:
+    """
+    Returns the appropriate DataLoader based on the file extension.
+    """
+    
+    ext = ext.lower()
+    if ext == '.csv':
+        return CSVLoader()
+    elif ext == '.tsv':
+        return TSVLoader()
+    elif ext == '.txt':
+        return TXTLoader(delimiter=delimiter or ",")
+    elif ext in ['.xls', '.xlsx']:
+        return ExcelLoader()
+    elif ext == '.json':
+        return JSONLoader()
+    elif ext == '.parquet':
+        return ParquetLoader()
+    elif ext == '.zip':
+        return ZipLoader()
+    else:
+        raise ValueError(f"Extensão de ficheiro não suportada: {ext}")
+
+
 # Context function
 def load_data(path: str, *, delimiter: str = None) -> pd.DataFrame:
     """
     Loads a dataset based on file extension using the strategy pattern.
     """
-
-    loaders = {
-        '.csv': CSVLoader(),
-        '.tsv': TSVLoader(),
-        '.txt': TXTLoader(delimiter=delimiter or ","),
-        '.xlsx': ExcelLoader(),
-        '.xls': ExcelLoader(),
-        '.json': JSONLoader(),
-        '.parquet': ParquetLoader(),
-        '.zip': ZipLoader(),
-    }
-
-    ext = os.path.splitext(path.lower())[1]
-
-    if ext not in loaders:
-        raise ValueError(f"Unsupported file format: {path}")
+    
+ext = os.path.splitext(path)[1]
 
     if delimiter is not None and ext != '.txt':
-        raise ValueError(f"`delimiter` argument is only supported for .txt files, not for {ext}")
+        raise ValueError(f"`delimiter` is only supported for .txt files, not for {ext}")
 
-    loader = loaders[ext]
+    loader = get_loader_for_extension(ext, delimiter)
     return loader.load_data(path)
