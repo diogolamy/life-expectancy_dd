@@ -120,7 +120,7 @@ def load_data(path: str, *, delimiter: str = None) -> pd.DataFrame:
     Loads a dataset based on file extension using the strategy pattern.
     """
     
-ext = os.path.splitext(path)[1]
+    ext = os.path.splitext(path)[1]
 
     if delimiter is not None and ext != '.txt':
         raise ValueError(f"`delimiter` is only supported for .txt files, not for {ext}")
